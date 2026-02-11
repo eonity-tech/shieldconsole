@@ -1,0 +1,93 @@
+// --- VARIABLES ---
+$bg-white: #ffffff;
+$bg-gray-light: #f8fafc;
+$border-color: #e2e8f0;
+$text-main: #0f172a;
+$text-muted: #64748b;
+$primary: #2563eb;
+$danger: #ef4444;
+$success: #10b981;
+
+// --- CONTAINER ---
+.network-table-container {
+  background: $bg-white;
+  border-radius: 12px;
+  border: 1px solid $border-color;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-top: 2rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex; flex-direction: column;
+}
+
+// --- HEADER ---
+.header-actions {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.5rem; border-bottom: 1px solid $border-color; background-color: $bg-gray-light;
+  h2 { margin: 0; font-size: 1.1rem; color: $text-main; font-weight: 700; }
+}
+.btn-refresh {
+  background: white; border: 1px solid $border-color; padding: 0.5rem 1rem;
+  border-radius: 6px; cursor: pointer; color: $text-main;
+  &:hover { background: #f1f5f9; }
+}
+
+// --- TABLE ---
+.table-scroll-wrapper { width: 100%; overflow-x: auto; }
+.data-table {
+  width: 100%; border-collapse: collapse; font-size: 0.9rem;
+  th {
+    background: #f1f5f9; color: $text-muted; font-weight: 600; text-transform: uppercase;
+    font-size: 0.75rem; padding: 1rem 1.5rem; text-align: left; border-bottom: 1px solid $border-color;
+  }
+  td { padding: 1rem 1.5rem; border-bottom: 1px solid $border-color; vertical-align: top; color: $text-main; }
+  tr:last-child td { border-bottom: none; }
+}
+
+// --- COLONNES ---
+
+// 1. Status
+.col-status { width: 60px; text-align: center; }
+.status-indicator {
+  font-size: 1.4rem;
+  &.green { color: $success; }
+  &.red { color: $danger; animation: pulse 2s infinite; }
+}
+
+// 2. IP / Host
+.net-ip { font-family: monospace; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+.net-host { font-size: 0.8rem; color: $text-muted; margin-top: 4px; margin-left: 24px; }
+.icon-muted { color: #cbd5e1; font-size: 0.8em; }
+
+// 3. Usage Badge
+.usage-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #f1f5f9; padding: 4px 10px; border-radius: 20px;
+  font-weight: 600; font-size: 0.85rem; border: 1px solid $border-color;
+  
+  &.high-usage { background: #fff7ed; color: #ea580c; border-color: #fdba74; } // Orange si gros trafic
+}
+
+// 4. Diagnostic
+.col-diag { max-width: 450px; line-height: 1.5; }
+.diag-alert {
+  color: #b91c1c; background: #fef2f2; padding: 8px 12px; border-radius: 6px;
+  font-size: 0.85rem; border: 1px solid #fecaca;
+  i { margin-right: 6px; }
+}
+.diag-ok { color: $text-muted; font-size: 0.85rem; font-style: italic; i { color: $success; margin-right: 6px; } }
+
+// --- ROW HIGHLIGHT ---
+.row-danger {
+  background-color: #fff1f2 !important; // Fond rouge très léger pour les lignes critiques
+}
+
+// --- ANIMATION ---
+.loading-bar { height: 4px; background: #e0f2fe; width: 100%; overflow: hidden; .bar-fill { height: 100%; background: $primary; width: 50%; animation: indeterminate 1.5s infinite linear; } }
+@keyframes indeterminate { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }
+@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+
+// Tablette
+@media (max-width: 1024px) {
+  .col-diag { max-width: 250px; font-size: 0.8rem; }
+}

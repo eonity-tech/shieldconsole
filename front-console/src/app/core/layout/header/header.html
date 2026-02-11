@@ -1,0 +1,34 @@
+<header class="app-header">
+    <div class="brand">
+        <img src="assets/images/logo-cybershield360.png" alt="CyberShield Logo">
+        <span>Shield-Console</span>
+    </div>
+    <nav class="nav-links">
+        <a routerLink="/monitoring/dashboard" routerLinkActive="active">
+            <i class="fas fa-chart-line"></i>
+            <span>Tableau de bord</span>
+        </a>
+        <a routerLink="/devices" routerLinkActive="active">
+            <i class="fas fa-server"></i>
+            <span>Appareils</span>
+        </a>
+        <a routerLink="/networks" routerLinkActive="active">
+            <i class="fas fa-network-wired"></i>
+            <span>Réseau</span>
+        </a>
+        <a routerLink="/softwares" routerLinkActive="active">
+            <i class="fas fa-boxes-stacked"></i>
+            <span>Logiciels</span>
+        </a>
+        <a routerLink="/ia/management" routerLinkActive="active">
+            <i class="fas fa-cog"></i>
+            <span>Config</span>
+        </a>
+    </nav>
+    <div class="user-actions">
+        <span class="username">Admin</span>
+        <button (click)="logout()" class="btn-logout" title="Se déconnecter">
+            <i class="fas fa-power-off"></i>
+        </button>
+    </div>
+</header>

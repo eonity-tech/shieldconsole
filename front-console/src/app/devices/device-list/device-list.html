@@ -1,0 +1,60 @@
+<div class="devices-table-container">
+  <div class="header-actions">
+    <h2>
+      <i class="fas fa-server"></i> Matériels Informatiques ({{ devices().length }})
+    </h2>
+    <button (click)="refresh()" class="btn-refresh">
+      <i class="fas fa-rotate" [class.fa-spin]="loading()"></i> <span class="btn-text">Actualiser</span>
+    </button>
+  </div> @if (loading()) { <div class="loading-bar">
+    <div class="bar-fill"></div>
+  </div> } <div class="table-scroll-wrapper">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th class="col-status">État</th>
+          <th>Machine</th>
+          <th>Réseau</th>
+          <th>Sécurité</th>
+          <th class="col-actions">Actions</th>
+        </tr>
+      </thead>
+      <tbody> @for (device of devices(); track device.id) { <tr [class.blacklisted-row]="device.isBlacklisted">
+          <td class="col-status"> @if (device.isBlacklisted) { <span class="status-icon banned" title="Bloqué">
+              <i class="fas fa-ban"></i>
+            </span> } @if (!device.isBlacklisted && device.status === 'PROTECTED') { <span class="status-icon safe"
+              title="Sécurisé">
+              <i class="fas fa-shield-halved"></i>
+            </span> } @if (!device.isBlacklisted && device.status === 'COMPROMISED') { <span class="status-icon danger"
+              title="Menace">
+              <i class="fas fa-triangle-exclamation"></i>
+            </span> } </td>
+          <td>
+            <div class="machine-name">
+              <i class="fas fa-desktop icon-muted"></i> {{ device.hostname }}
+            </div>
+            <div class="machine-details"> @if (device.osType === 'WINDOWS') { <i class="fab fa-windows"></i> } @if
+              (device.osType === 'LINUX') { <i class="fab fa-linux"></i> } @if (device.osType === 'MACOS') { <i
+                class="fab fa-apple"></i> } {{ device.osType }} {{ device.osVersion }} @if (device.vendor) { <span
+                class="vendor-info">• {{ device.vendor }}</span> } </div>
+          </td>
+          <td>
+            <div class="net-ip">
+              {{ device.ipAddress }}
+            </div>
+            <div class="net-mac">{{ device.macAddress }}</div>
+          </td>
+          <td class="col-security"> @if (device.status === 'COMPROMISED') { <div class="msg-danger">
+              <i class="fas fa-bug"></i> {{ device.securityRecommendation || 'Analyse requise' }}
+            </div> } @if (device.status === 'PROTECTED') { <div class="msg-safe">
+              <i class="fas fa-check-circle"></i> Sain
+            </div> } </td>
+          <td class="col-actions"> @if (!device.isBlacklisted) { <button class="btn-action block" title="Bloquer">
+              <i class="fas fa-lock"></i> <span>Bloquer</span>
+            </button> } @if (device.isBlacklisted) { <button class="btn-action unblock" title="Débloquer">
+              <i class="fas fa-lock-open"></i> <span>Débloquer</span>
+            </button> } </td>
+        </tr> } </tbody>
+    </table>
+  </div>
+</div>

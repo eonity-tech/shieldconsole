@@ -1,0 +1,152 @@
+/* --- VARIABLES --- */
+$header-height: 64px;
+$bg-color: #0f172a;
+$text-color: white;
+$accent-color: #3b82f6;
+$border-color: #1e293b;
+
+/* --- CONTENEUR PRINCIPAL (FLEXBOX) --- */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: $header-height;
+  padding: 0 2rem;
+  background-color: $bg-color;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  color: $text-color;
+  flex-wrap: nowrap;
+  gap: 1rem; 
+
+  /* --- ZONE 1 : MARQUE (GAUCHE) --- */
+  .brand {
+    flex: 0 0 auto; 
+    
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: $accent-color;
+
+    img {
+      height: 32px;
+      width: auto;
+      display: block;
+    }
+
+    span {
+      color: white;
+      white-space: nowrap;
+    }
+  }
+
+  /* --- ZONE 2 : NAVIGATION (CENTRE) --- */
+  .nav-links {
+    flex: 1 1 auto;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: #94a3b8;
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+
+      i { font-size: 1rem; }
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      &.active {
+        color: $accent-color;
+        background-color: rgba(59, 130, 246, 0.1);
+      }
+
+      &.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+    }
+  }
+
+  /* --- ZONE 3 : USER (DROITE) --- */
+  .user-actions {
+    // Ne rétrécit pas
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .username {
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      font-weight: 600;
+    }
+
+    .btn-logout {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: 1px solid $border-color;
+      color: #ef4444;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background-color: #ef4444;
+        color: white;
+        border-color: #ef4444;
+      }
+    }
+  }
+}
+
+/* --- ADAPTATION RESPONSIVE (Tablette < 992px) --- */
+@media (max-width: 992px) {
+  .app-header {
+    padding: 0 1rem;
+    
+    .brand {
+      font-size: 1rem;
+      img { height: 28px; }
+      span { display: none; } 
+    }
+
+    .nav-links {
+      gap: 0.5rem;
+      justify-content: flex-end;
+      
+      a {
+        font-size: 0.85rem;
+        padding: 0.5rem;
+      }
+    }
+
+    .user-actions {
+      gap: 0.5rem;
+      
+      .username {
+        display: none; 
+      }
+    }
+  }
+}

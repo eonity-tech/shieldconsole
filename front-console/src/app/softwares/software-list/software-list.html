@@ -1,0 +1,57 @@
+<div class="software-table-container">
+    <div class="header-actions">
+        <h2>
+            <i class="fas fa-boxes-stacked"></i> Inventaire Logiciel ({{ softwares().length }})
+        </h2>
+        <button (click)="refresh()" class="btn-refresh">
+            <i class="fas fa-rotate" [class.fa-spin]="loading()"></i> Actualiser </button>
+    </div> @if (loading()) { <div class="loading-bar">
+        <div class="bar-fill"></div>
+    </div> } <div class="table-scroll-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th class="col-status">Niveau de Risque</th>
+                    <th>Logiciel / Éditeur</th>
+                    <th>Version</th>
+                    <th>Statut</th>
+                    <th>Recommandation</th>
+                </tr>
+            </thead>
+            <tbody> @for (soft of softwares(); track soft.id) { <tr
+                    [class.row-critical]="soft.riskLevel === 'CRITIQUE'">
+                    <td class="col-status">
+                        <span class="badge" [class.critique]="soft.riskLevel === 'CRITIQUE'"
+                            [class.sain]="soft.riskLevel === 'SAIN'"> @if (soft.riskLevel === 'CRITIQUE') { <i
+                                class="fas fa-bug"></i> } @if (soft.riskLevel === 'SAIN') { <i class="fas fa-check"></i>
+                            } {{ soft.riskLevel }}
+                        </span> @if (soft.criticalScore > 0) { <div class="score-mini"> Score:
+                            {{ soft.criticalScore }}/100 </div> }
+                    </td>
+                    <td>
+                        <div class="soft-name">
+                            {{ soft.name }}
+                        </div>
+                        <div class="soft-publisher">
+                            <i class="fas fa-building icon-muted"></i> {{ soft.publisher }}
+                        </div>
+                        <div class="device-ref" title="{{ soft.deviceId }}">
+                            <i class="fas fa-desktop icon-muted"></i> {{ soft.deviceId }}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="version-tag">{{ soft.version }}</span>
+                    </td>
+                    <td> @if (soft.isRunning) { <div class="status-running">
+                            <span class="pulse-dot"></span> En cours d'exécution
+                        </div> } @if (!soft.isRunning) { <div class="status-stopped">
+                            <i class="fas fa-stop-circle"></i> Arrêté
+                        </div> } </td>
+                    <td class="col-reco"> @if (soft.riskLevel === 'CRITIQUE') { <div class="msg-danger">
+                            <i class="fas fa-triangle-exclamation"></i> {{ soft.recommendation }}
+                        </div> } @if (soft.riskLevel === 'SAIN') { <div class="msg-safe"> Logiciel conforme. </div> }
+                    </td>
+                </tr> } </tbody>
+        </table>
+    </div>
+</div>

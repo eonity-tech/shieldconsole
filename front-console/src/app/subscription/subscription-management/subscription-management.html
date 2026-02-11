@@ -1,0 +1,75 @@
+<div class="sub-container">
+    <header class="page-header">
+        <div class="title-group">
+            <h1><i class="fas fa-robot"></i> Gestion IA & Quotas</h1>
+            <p>Gérez l'accès à l'intelligence artificielle CyberShield.</p>
+        </div>
+        <div class="simulation-area">
+            <label>Abonnement IA :</label>
+            <div class="control-group">
+                <select #tenantSelect [ngModel]="currentTenantId()" (change)="currentTenantId.set(tenantSelect.value)">
+                    <option value="client-free">Client FREE</option>
+                    <option value="client-pro">Client PRO</option>
+                    <option value="client-enterprise">Client ENTERPRISE</option>
+                </select>
+                <button class="btn-check" (click)="loadData()" [disabled]="loading()"> @if (!loading()) { <i
+                        class="fas fa-search"></i> } @if (loading()) { <i class="fas fa-circle-notch fa-spin"></i> }
+                    Vérifier </button>
+                <button class="btn-help" (click)="toggleCostInfo()"><i class="far fa-circle-question"></i></button>
+            </div> @if (showCostInfo()) { <div class="cost-tooltip">
+                <i class="fas fa-coins"></i>
+                <span>Vérification = <strong>1 crédit API</strong>.</span>
+            </div> }
+        </div>
+    </header> @if (loading() && !subscription()) { <div class="loading-skeleton">Chargement des données...</div> } @if
+    (subscription(); as sub) { <div class="content-wrapper">
+        <div class="plan-card" [ngClass]="sub.planType.toLowerCase()">
+            <div class="card-header">
+                <span class="plan-badge">{{ sub.planType }}</span> @if (sub.authorized) { <div
+                    class="status-badge status-ok">
+                    <i class="fas fa-check-circle"></i> Opérationnel
+                </div> } @if (!sub.active) { <div class="status-badge status-error">
+                    <i class="fas fa-ban"></i> Désactivé
+                </div> } @if (sub.active && !sub.authorized) { <div class="status-badge status-warn">
+                    <i class="fas fa-exclamation-triangle"></i> Quota / Technique
+                </div> }
+            </div>
+            <div class="card-body">
+                <div class="big-icon"> @if (sub.planType === 'FREE') { <i class="fas fa-paper-plane"></i> } @if
+                    (sub.planType === 'PRO') { <i class="fas fa-gem"></i> } @if (sub.planType === 'ENTERPRISE') { <i
+                        class="fas fa-building"></i> } </div>
+                <div class="credits-info">
+                    <div class="number">{{ sub.remainingCredits | number }}</div>
+                    <div class="label">Crédits IA Restants</div>
+                </div>
+            </div>
+            <div class="admin-actions"> @if (!sub.active) { <button class="btn-action btn-enable"
+                    (click)="activateSubscription()">
+                    <i class="fas fa-power-off"></i> Réactiver l'accès </button> } @if (sub.active) { <button
+                    class="btn-action btn-disable" (click)="suspendSubscription()">
+                    <i class="fas fa-pause"></i> Suspendre l'accès </button> } <div class="action-info"> @if
+                    (!sub.active) { <small>Le client est bloqué administrativement.</small> } @if (sub.active) {
+                    <small>L'accès est ouvert (soumis aux quotas).</small> } </div>
+            </div>
+            <div class="card-footer">
+                <div class="progress-label">
+                    <span>Utilisation</span>
+                    <span>{{ sub.usagePercent }}%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" [style.width.%]="sub.usagePercent"></div>
+                </div>
+            </div>
+        </div>
+        <div class="api-message" [class.authorized]="sub.authorized" [class.denied]="!sub.authorized">
+            <div class="icon-box">
+                <i class="fas" [class.fa-check-circle]="sub.authorized" [class.fa-info-circle]="!sub.authorized"></i>
+            </div>
+            <div class="message-content">
+                <strong>Réponse Système :</strong>
+                <p>{{ sub.message }}</p> @if (sub.reason) { <p class="reason-text"><i class="fas fa-quote-left"></i>
+                    {{ sub.reason }}</p> }
+            </div>
+        </div>
+    </div> }
+</div>

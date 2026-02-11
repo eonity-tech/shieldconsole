@@ -1,0 +1,105 @@
+// --- VARIABLES ---
+$bg-white: #ffffff;
+$bg-gray-light: #f8fafc;
+$border-color: #e2e8f0;
+$text-main: #0f172a;
+$text-muted: #64748b;
+$primary: #2563eb;
+$danger: #ef4444;
+$success: #10b981;
+
+// --- CONTAINER ---
+.software-table-container {
+  background: $bg-white;
+  border-radius: 12px;
+  border: 1px solid $border-color;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-top: 2rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+// --- HEADER ---
+.header-actions {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.5rem; border-bottom: 1px solid $border-color; background-color: $bg-gray-light;
+  h2 { margin: 0; font-size: 1.1rem; color: $text-main; font-weight: 700; }
+}
+
+.btn-refresh {
+  background: white; border: 1px solid $border-color; padding: 0.5rem 1rem;
+  border-radius: 6px; cursor: pointer; font-size: 0.9rem; color: $text-main;
+  &:hover { background: #f1f5f9; }
+}
+
+// --- TABLE ---
+.table-scroll-wrapper { width: 100%; overflow-x: auto; }
+.data-table {
+  width: 100%; border-collapse: collapse; font-size: 0.9rem;
+  th {
+    background: #f1f5f9; color: $text-muted; font-weight: 600; text-transform: uppercase;
+    font-size: 0.75rem; padding: 1rem 1.5rem; text-align: left; border-bottom: 1px solid $border-color;
+  }
+  td { padding: 1rem 1.5rem; border-bottom: 1px solid $border-color; color: $text-main; vertical-align: top;}
+  tr:last-child td { border-bottom: none; }
+}
+
+// --- CONTENU SPECIFIQUE ---
+
+// 1. Colonne Risque
+.col-status { width: 140px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;
+  
+  &.critique { background: #fef2f2; color: $danger; border: 1px solid #fecaca; }
+  &.sain { background: #f0fdf4; color: $success; border: 1px solid #bbf7d0; }
+}
+.score-mini { font-size: 0.7rem; color: $danger; margin-top: 4px; font-weight: 600; }
+
+// 2. Info Logiciel
+.soft-name { font-weight: 700; color: $text-main; font-size: 0.95rem; }
+.soft-publisher { font-size: 0.8rem; color: $text-muted; margin-top: 2px; }
+.device-ref { 
+  font-family: monospace; font-size: 0.75rem; color: #94a3b8; margin-top: 6px; 
+  display: flex; align-items: center; gap: 4px;
+  max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.icon-muted { color: #cbd5e1; font-size: 0.8em; }
+
+// 3. Version
+.version-tag { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 0.85rem; color: $text-main; border: 1px solid $border-color; }
+
+// 4. Statut Running
+.status-running { color: $success; font-weight: 500; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
+.status-stopped { color: $text-muted; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
+
+.pulse-dot {
+  width: 8px; height: 8px; background: $success; border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba($success, 0.7);
+  animation: pulse-green 2s infinite;
+}
+
+// 5. Recommandation
+.col-reco { max-width: 350px; }
+.msg-danger { color: $danger; font-weight: 600; font-size: 0.85rem; i { margin-right: 4px; } }
+.msg-safe { color: $text-muted; font-size: 0.85rem; font-style: italic; }
+
+// --- LIGNE CRITIQUE (Highlight) ---
+.row-critical {
+  background-color: #fff1f2 !important; // Rouge très très pâle
+  .soft-name { color: #991b1b; } // Rouge foncé pour le nom
+}
+
+// --- ANIMATIONS ---
+.loading-bar { height: 4px; background: #e0f2fe; width: 100%; overflow: hidden; .bar-fill { height: 100%; background: $primary; width: 50%; animation: indeterminate 1.5s infinite linear; } }
+@keyframes indeterminate { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }
+@keyframes pulse-green { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba($success, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba($success, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba($success, 0); } }
+
+// Responsive Tablette
+@media (max-width: 1024px) {
+  .device-ref { display: none; } // On cache l'ID device
+  .col-reco { max-width: 200px; }
+}

@@ -1,0 +1,202 @@
+// --- VARIABLES ---
+$bg-white: #ffffff;
+$bg-gray-light: #f8fafc;
+$border-color: #e2e8f0;
+$text-main: #0f172a;
+$text-muted: #64748b;
+$text-light: #94a3b8;
+$color-primary: #2563eb;
+$color-success: #10b981;
+$color-danger: #ef4444;
+
+// --- CONTENEUR ---
+.devices-table-container {
+  background: $bg-white;
+  border-radius: 12px;
+  border: 1px solid $border-color;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-top: 2rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+// --- HEADER ---
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid $border-color;
+  background-color: $bg-gray-light;
+
+  h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: $text-main;
+    font-weight: 700;
+  }
+}
+
+// --- TABLE SCROLL WRAPPER (Important pour le responsive) ---
+.table-scroll-wrapper {
+  width: 100%;
+  overflow-x: auto; // Permet le scroll horizontal SI nécessaire
+  -webkit-overflow-scrolling: touch; // Scroll fluide sur iPad
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 80vw;
+
+  th {
+    background: #f1f5f9;
+    color: $text-muted;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    padding: 1rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid $border-color;
+    white-space: nowrap; // Les titres ne passent pas à la ligne
+  }
+
+  td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid $border-color;
+    vertical-align: middle;
+    color: $text-main;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background-color: #f8fafc; }
+}
+
+// --- BOUTONS ---
+.btn-refresh {
+  background: white;
+  border: 1px solid $border-color;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: $text-main;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  &:hover { background: #f1f5f9; }
+}
+
+.btn-action {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid transparent;
+  white-space: nowrap; // Empêche le texte du bouton de casser
+
+  &.block {
+    background: #fff1f2; color: $color-danger; border-color: #fecaca;
+    &:hover { background: $color-danger; color: white; border-color: $color-danger; }
+  }
+  &.unblock {
+    background: #f0fdf4; color: $color-success; border-color: #bbf7d0;
+    &:hover { background: $color-success; color: white; border-color: $color-success; }
+  }
+}
+
+// --- LOADING BAR ---
+.loading-bar {
+  height: 4px; background: #e0f2fe; width: 100%; overflow: hidden;
+  .bar-fill {
+    height: 100%; background: $color-primary; width: 50%;
+    animation: indeterminate 1.5s infinite linear;
+  }
+}
+
+// --- CELLULES SPÉCIFIQUES ---
+.col-status { text-align: center; width: 60px; }
+.status-icon {
+  font-size: 1.2rem;
+  &.danger { color: $color-danger; animation: pulse-icon 2s infinite; }
+  &.safe { color: $color-success; }
+  &.banned { color: $text-light; }
+}
+
+.machine-name { font-weight: 600; color: $text-main; display: flex; align-items: center; gap: 8px; }
+.machine-details { font-size: 0.75rem; color: $text-muted; margin-top: 4px; i { margin-right: 4px; } }
+
+.net-ip { font-family: monospace; font-size: 0.9rem; font-weight: 500;}
+.net-mac { font-size: 0.7rem; color: $text-light; font-family: monospace; }
+
+.col-security { max-width: 300px; } // Limite la largeur max sur desktop
+.msg-danger { color: $color-danger; font-weight: 500; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;}
+.msg-safe { color: $color-success; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;}
+.icon-muted { color: #cbd5e1; font-size: 0.8rem; }
+
+// --- ROW BLACKLIST ---
+.blacklisted-row {
+  background-color: #f1f5f9 !important; opacity: 0.8;
+  .machine-name, .net-ip, .msg-safe, .msg-danger { color: $text-light !important; text-decoration: line-through; }
+  .status-icon { opacity: 0.5; animation: none; }
+  .btn-action { opacity: 1; text-decoration: none; }
+}
+
+@keyframes indeterminate { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }
+@keyframes pulse-icon { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
+
+
+/* =========================================
+   📱 ADAPTATION TABLETTE (Max 1024px)
+   ========================================= */
+@media (max-width: 1024px) {
+  .devices-table-container {
+    margin-top: 1rem; // On remonte un peu le tableau
+  }
+
+  .header-actions {
+    padding: 1rem; // Header plus compact
+    h2 { font-size: 1rem; }
+    
+    // Sur petite tablette, on cache le texte "Actualiser"
+    .btn-text { display: none; } 
+  }
+
+  .data-table {
+    // On réduit drastiquement le padding des cellules
+    th, td {
+      padding: 0.75rem 0.5rem; 
+      font-size: 0.85rem; // Police un peu plus petite
+    }
+  }
+
+  // --- Optimisation des colonnes pour gagner de la place ---
+  
+  // 1. Machine : On cache le "Vendor" (Dell, HP) pour gagner de la place
+  .vendor-info { display: none; }
+  
+  // 2. Réseau : On aligne IP et MAC verticalement proprement
+  .net-ip { font-size: 0.8rem; }
+  .net-mac { font-size: 0.65rem; }
+
+  // 3. Sécurité : On réduit la largeur max autorisée pour forcer le retour à la ligne
+  .col-security { 
+    max-width: 180px; 
+    line-height: 1.3;
+  }
+
+  // 4. Actions : On cache le texte "Bloquer/Débloquer", on garde l'icône
+  .btn-action {
+    span { display: none; } // Cache le texte
+    padding: 0.4rem 0.6rem; // Bouton carré
+    font-size: 0.9rem; // Icône plus grosse
+  }
+}

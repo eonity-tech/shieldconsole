@@ -1,0 +1,47 @@
+<div class="network-table-container">
+    <div class="header-actions">
+        <h2>
+            <i class="fas fa-satellite-dish"></i> Supervision Trafic Réseau ({{ trafficList().length }})
+        </h2>
+        <button (click)="refresh()" class="btn-refresh">
+            <i class="fas fa-rotate" [class.fa-spin]="loading()"></i> Actualiser </button>
+    </div> @if (loading()) { <div class="loading-bar">
+        <div class="bar-fill"></div>
+    </div> } <div class="table-scroll-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th class="col-status">État</th>
+                    <th>Source (IP / Hôte)</th>
+                    <th>Volume Trafic</th>
+                    <th>Diagnostic & Ports</th>
+                </tr>
+            </thead>
+            <tbody> @for (item of trafficList(); track item.deviceId) { <tr [class.row-danger]="item.statusCode === 1">
+                    <td class="col-status">
+                        <div class="status-indicator" [class.green]="item.statusCode === 3"
+                            [class.red]="item.statusCode === 1"> @if (item.statusCode === 3) { <i
+                                class="fas fa-check-circle"></i> } @if (item.statusCode === 1) { <i
+                                class="fas fa-radiation"></i> } </div>
+                    </td>
+                    <td>
+                        <div class="net-ip">
+                            <i class="fas fa-network-wired icon-muted"></i> {{ item.ipAddress }}
+                        </div>
+                        <div class="net-host">{{ item.hostname }}</div>
+                    </td>
+                    <td>
+                        <div class="usage-badge" [class.high-usage]="item.currentUsage > 100000000">
+                            <i class="fas fa-chart-pie"></i> {{ formatBytes(item.currentUsage) }}
+                        </div>
+                    </td>
+                    <td class="col-diag"> @if (item.statusCode === 1) { <div class="diag-alert">
+                            <i class="fas fa-triangle-exclamation"></i>
+                            {{ item.message }}
+                        </div> } @if (item.statusCode === 3) { <div class="diag-ok">
+                            <i class="fas fa-shield-alt"></i> Trafic nominal. Aucun port suspect.
+                        </div> } </td>
+                </tr> } </tbody>
+        </table>
+    </div>
+</div>
