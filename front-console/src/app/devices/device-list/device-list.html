@@ -4,11 +4,10 @@
       <i class="fas fa-server"></i> Matériels Informatiques ({{ devices().length }})
     </h2>
     <button (click)="refresh()" class="btn-refresh">
-      <i class="fas fa-rotate" [class.fa-spin]="loading()"></i> <span class="btn-text">Actualiser</span>
-    </button>
-  </div> @if (loading()) { <div class="loading-bar">
-    <div class="bar-fill"></div>
-  </div> } <div class="table-scroll-wrapper">
+      <i class="fas fa-rotate" [class.fa-spin]="loading()"></i> Actualiser </button>
+  </div>
+  <app-charts [dashboardData]="deviceList()"></app-charts>
+  <div class="table-scroll-wrapper">
     <table class="data-table">
       <thead>
         <tr>
@@ -19,42 +18,63 @@
           <th class="col-actions">Actions</th>
         </tr>
       </thead>
-      <tbody> @for (device of devices(); track device.id) { <tr [class.blacklisted-row]="device.isBlacklisted">
-          <td class="col-status"> @if (device.isBlacklisted) { <span class="status-icon banned" title="Bloqué">
-              <i class="fas fa-ban"></i>
-            </span> } @if (!device.isBlacklisted && device.status === 'PROTECTED') { <span class="status-icon safe"
-              title="Sécurisé">
-              <i class="fas fa-shield-halved"></i>
-            </span> } @if (!device.isBlacklisted && device.status === 'COMPROMISED') { <span class="status-icon danger"
-              title="Menace">
-              <i class="fas fa-triangle-exclamation"></i>
-            </span> } </td>
+      <tbody> @for (device of paginatedDevices(); track device.id) { <tr
+          [class]="'vulnerability-' + device.vulnerabilityLevel.toLowerCase()"
+          [class.blacklisted-row]="device.isBlacklisted" [class.row-expanded]="selectedDevice()?.id === device.id">
+          <td class="col-status"> @if (device.isBlacklisted) { <span class="status-icon danger" title="Bloqué"><i
+                class="fas fa-ban"></i></span> } @else { <span class="status-icon safe" title="Actif"><i
+                class="fas fa-check-circle"></i></span> } </td>
           <td>
-            <div class="machine-name">
-              <i class="fas fa-desktop icon-muted"></i> {{ device.hostname }}
-            </div>
-            <div class="machine-details"> @if (device.osType === 'WINDOWS') { <i class="fab fa-windows"></i> } @if
-              (device.osType === 'LINUX') { <i class="fab fa-linux"></i> } @if (device.osType === 'MACOS') { <i
-                class="fab fa-apple"></i> } {{ device.osType }} {{ device.osVersion }} @if (device.vendor) { <span
-                class="vendor-info">• {{ device.vendor }}</span> } </div>
+            <div class="machine-name"><i class="fas fa-desktop"></i> {{ device.hostname }}</div>
+            <div class="machine-details">{{ device.osType }} {{ device.osVersion }} • {{ device.vendor }}</div>
           </td>
           <td>
-            <div class="net-ip">
-              {{ device.ipAddress }}
-            </div>
+            <div class="net-ip">{{ device.ipAddress }}</div>
             <div class="net-mac">{{ device.macAddress }}</div>
           </td>
-          <td class="col-security"> @if (device.status === 'COMPROMISED') { <div class="msg-danger">
-              <i class="fas fa-bug"></i> {{ device.securityRecommendation || 'Analyse requise' }}
-            </div> } @if (device.status === 'PROTECTED') { <div class="msg-safe">
-              <i class="fas fa-check-circle"></i> Sain
-            </div> } </td>
-          <td class="col-actions"> @if (!device.isBlacklisted) { <button class="btn-action block" title="Bloquer">
-              <i class="fas fa-lock"></i> <span>Bloquer</span>
-            </button> } @if (device.isBlacklisted) { <button class="btn-action unblock" title="Débloquer">
-              <i class="fas fa-lock-open"></i> <span>Débloquer</span>
-            </button> } </td>
-        </tr> } </tbody>
+          <td>
+            <span [class]="'vulnerability-' + device.vulnerabilityLevel.toLowerCase()">
+              {{ device.vulnerabilityLevel }}
+            </span>
+          </td>
+          <td class="col-actions"> @if (!device.isBlacklisted) { <button class="btn-action block"
+              (click)="onBlock(device.id)">
+              <i class="fas fa-lock"></i>
+            </button>
+            <button class="btn-details" (click)="openDetails(device)">
+              <i class="fas" [class.fa-chevron-up]="selectedDevice()?.id === device.id"
+                [class.fa-chevron-down]="selectedDevice()?.id !== device.id"></i>
+            </button> } @else { <button class="btn-action unblock" (click)="onUnblock(device.id)">
+              <i class="fas fa-lock-open"></i>
+            </button> }
+          </td>
+        </tr> @if (selectedDevice()?.id === device.id) { <tr class="detail-row">
+          <td colspan="5">
+            <div class="detail-content-container">
+              <div class="info-grid">
+                <div class="info-item"><label>Mac</label><span>{{device.macAddress}}</span></div>
+                <div class="info-item"><label>Ports</label><span>{{device.openPorts}}</span></div>
+                <div class="info-item"><label>Score</label><span>{{device.riskScore}}</span></div>
+              </div>
+              <div class="security-box">
+                <h4>Recommandation</h4>
+                <p>{{device.securityRecommendation}}</p>
+              </div>
+            </div>
+          </td>
+        </tr> } } </tbody>
     </table>
+  </div>
+  <div class="pagination-footer">
+    <span class="page-info"> Affichage de {{ paginatedDevices().length }} sur {{ devices().length }} appareils </span>
+    <div class="pagination-controls">
+      <button class="page-btn" [disabled]="currentPage() === 1" (click)="changePage(currentPage() - 1)">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <span class="page-current">Page {{ currentPage() }} / {{ totalPages() }}</span>
+      <button class="page-btn" [disabled]="currentPage() === totalPages()" (click)="changePage(currentPage() + 1)">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
   </div>
 </div>

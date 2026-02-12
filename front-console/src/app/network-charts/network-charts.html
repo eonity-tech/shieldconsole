@@ -1,0 +1,31 @@
+@if (trafficData().length) {
+<div class="charts-grid">
+    <div class="chart-card wide">
+        <h3><i class="fas fa-gauge-high"></i> Bande Passante par Hôte ({{ trafficData().length }})</h3>
+        
+        <div class="chart-scroll-container">
+            <div class="chart-inner-wrapper" [style.height.px]="bandwidthChartHeight()">
+                <canvas baseChart 
+                    [data]="bandwidthChartData()" 
+                    [options]="bandwidthChartOptions" 
+                    [type]="'bar'">
+                </canvas>
+            </div>
+        </div>
+    </div>
+    <div class="chart-card">
+        <h3><i class="fas fa-shield-virus"></i> État des Flux</h3>
+        <div class="canvas-wrapper">
+            <canvas baseChart 
+                [data]="healthChartData()" 
+                [options]="healthChartOptions" 
+                [type]="'doughnut'">
+            </canvas>
+        </div>
+        <div class="chart-center-text">
+            <span class="big-number">{{ trafficData().length }}</span>
+            <span class="label">Flux Total</span>
+        </div>
+    </div>
+</div>
+}

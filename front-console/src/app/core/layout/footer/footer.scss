@@ -1,3 +1,4 @@
+@use "sass:color";
 footer {
   text-align: center;
   padding: 1rem;
@@ -24,7 +25,6 @@ footer {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    
     i {
       font-size: 0.9em;
     }

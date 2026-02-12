@@ -1,15 +1,22 @@
+@use "sass:color";
+
 // --- VARIABLES ---
 $bg-white: #ffffff;
 $bg-gray-light: #f8fafc;
+$bg-details: #f0f7ff;
 $border-color: #e2e8f0;
 $text-main: #0f172a;
 $text-muted: #64748b;
 $text-light: #94a3b8;
-$color-primary: #2563eb;
-$color-success: #10b981;
-$color-danger: #ef4444;
+$color-primary: #223a72;
+$color-success: #19a879;
+$color-danger: #bb3131;
+$color-warning: #f59e0b;
 
-// --- CONTENEUR ---
+// Police technique pour les IPs, MACs et Ports
+$font-mono: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', monospace;
+
+// --- CONTENEUR PRINCIPAL ---
 .devices-table-container {
   background: $bg-white;
   border-radius: 12px;
@@ -24,179 +31,301 @@ $color-danger: #ef4444;
 
 // --- HEADER ---
 .header-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem;
-  border-bottom: 1px solid $border-color;
-  background-color: $bg-gray-light;
-
-  h2 {
-    margin: 0;
-    font-size: 1.1rem;
-    color: $text-main;
-    font-weight: 700;
-  }
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.5rem; border-bottom: 1px solid $border-color; background-color: $bg-gray-light;
+  h2 { margin: 0; font-size: 1.1rem; color: $text-main; font-weight: 700; }
+}
+.btn-refresh {
+  background: white; border: 1px solid $border-color; padding: 0.5rem 1rem;
+  border-radius: 6px; cursor: pointer; color: $text-main;
+  &:hover { background: #f1f5f9; }
 }
 
-// --- TABLE SCROLL WRAPPER (Important pour le responsive) ---
+// --- TABLEAU ---
 .table-scroll-wrapper {
   width: 100%;
-  overflow-x: auto; // Permet le scroll horizontal SI nécessaire
-  -webkit-overflow-scrolling: touch; // Scroll fluide sur iPad
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .data-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.9rem;
-  min-width: 80vw;
+  min-width: 90vw;
 
   th {
     background: #f1f5f9;
     color: $text-muted;
     font-weight: 600;
     text-transform: uppercase;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     padding: 1rem 1.5rem;
     text-align: left;
     border-bottom: 1px solid $border-color;
-    white-space: nowrap; // Les titres ne passent pas à la ligne
   }
 
   td {
-    padding: 1rem 1.5rem;
+    padding: 1.25rem 1.5rem;
     border-bottom: 1px solid $border-color;
     vertical-align: middle;
     color: $text-main;
+    transition: background-color 0.2s;
+    button {
+      margin: 0 0.25rem;
+    }
   }
 
-  tr:last-child td { border-bottom: none; }
-  tbody tr:hover { background-color: #f8fafc; }
+  // --- LIGNES EXPANSIVES ---
+  tr.row-expanded {
+    background-color: $bg-details;
+    td { border-bottom: none; }
+  }
+
+  .detail-row {
+    background-color: $bg-details;
+    td {
+      padding: 0;
+      border-bottom: 1px solid $border-color;
+    }
+  }
+}
+
+// --- PAGINATION ---
+.pagination-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid $border-color;
+  background-color: $bg-white; // Fond blanc pour clore le tableau
+
+  .page-info {
+    font-size: 0.85rem;
+    color: $text-muted;
+    font-weight: 500;
+  }
+
+  .pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .page-current {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $text-main;
+    font-family: 'Inter', sans-serif; // Ou ta variable de police
+  }
+
+  .page-btn {
+    background: white;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: $text-muted;
+    transition: all 0.2s;
+
+    &:hover:not(:disabled) {
+      background: $bg-gray-light;
+      color: $color-primary;
+      border-color: $color-primary;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: #f1f5f9;
+    }
+    
+    i { font-size: 0.8rem; }
+  }
+}
+
+// Adaptation Mobile pour la pagination
+@media (max-width: 768px) {
+  .pagination-footer {
+    flex-direction: column;
+    gap: 10px;
+    
+    .page-info { text-align: center; }
+  }
+}
+
+// --- DONNÉES TECHNIQUES (MONOSPACE) ---
+.net-ip {
+  font-family: $font-mono;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: $color-primary;
+  letter-spacing: -0.3px;
+}
+
+.net-mac {
+  font-family: $font-mono;
+  font-size: 0.75rem;
+  color: $text-light;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.machine-name {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.machine-details {
+  font-size: 0.75rem;
+  color: $text-muted;
+  margin-top: 4px;
+}
+
+// --- STATUTS ET ICÔNES ---
+.status-icon {
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+
+  &.safe { color: $color-success; }
+  &.danger { 
+    color: $color-danger;
+    animation: pulse-icon 2s infinite; 
+  }
+  &.warning { color: $color-warning; }
+  &.banned { color: $text-light; }
+}
+
+// --- ZONE DE DÉTAIL DÉPLIÉE ---
+.detail-content-container {
+  padding: 1.5rem;
+  margin: 0 1.5rem 1.5rem 1.5rem;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid $border-color;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  animation: fadeInDown 0.3s ease-out;
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .info-item {
+    label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: $text-light;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    span {
+      font-family: $font-mono;
+      font-weight: 500;
+      color: $text-main;
+    }
+  }
+}
+
+.security-box {
+  background: #fff7ed;
+  border-left: 4px solid $color-warning;
+  padding: 1rem;
+  border-radius: 4px;
+
+  h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.85rem;
+    color: #9a3412;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #c2410c;
+    line-height: 1.5;
+  }
 }
 
 // --- BOUTONS ---
-.btn-refresh {
+.btn-refresh, .btn-details {
   background: white;
   border: 1px solid $border-color;
   padding: 0.5rem 1rem;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 0.9rem;
-  color: $text-main;
-  transition: all 0.2s;
-  display: flex;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  &:hover { background: #f1f5f9; }
+  transition: all 0.2s;
+  &:hover { background: #f1f5f9; border-color: $text-muted; }
+}
+
+.btn-details {
+  color: $color-primary;
+  &:hover { background: $bg-details; border-color: $color-primary; }
 }
 
 .btn-action {
-  padding: 0.4rem 0.8rem;
+  padding: 0.5rem 1rem;
   border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 700;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   border: 1px solid transparent;
-  white-space: nowrap; // Empêche le texte du bouton de casser
 
   &.block {
-    background: #fff1f2; color: $color-danger; border-color: #fecaca;
-    &:hover { background: $color-danger; color: white; border-color: $color-danger; }
+    background: #fff1f2; color: $color-danger; border-color: #ddc1c1;
+    &:hover { background: $color-danger; color: white; }
   }
   &.unblock {
     background: #f0fdf4; color: $color-success; border-color: #bbf7d0;
-    &:hover { background: $color-success; color: white; border-color: $color-success; }
+    &:hover { background: $color-success; color: white; }
   }
 }
 
-// --- LOADING BAR ---
-.loading-bar {
-  height: 4px; background: #e0f2fe; width: 100%; overflow: hidden;
-  .bar-fill {
-    height: 100%; background: $color-primary; width: 50%;
-    animation: indeterminate 1.5s infinite linear;
-  }
+// --- BADGES ---
+[class^="vulnerability-"] {
+  font-family: $font-mono;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+.vulnerability-critical { background: #fff1f2; color: $color-danger; }
+.vulnerability-safe { background: #ffffff; color: $color-success; }
+.vulnerability-warning { background: #fef3c7; color: $color-warning; }
+
+// --- ANIMATIONS ---
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-// --- CELLULES SPÉCIFIQUES ---
-.col-status { text-align: center; width: 60px; }
-.status-icon {
-  font-size: 1.2rem;
-  &.danger { color: $color-danger; animation: pulse-icon 2s infinite; }
-  &.safe { color: $color-success; }
-  &.banned { color: $text-light; }
-}
 
-.machine-name { font-weight: 600; color: $text-main; display: flex; align-items: center; gap: 8px; }
-.machine-details { font-size: 0.75rem; color: $text-muted; margin-top: 4px; i { margin-right: 4px; } }
-
-.net-ip { font-family: monospace; font-size: 0.9rem; font-weight: 500;}
-.net-mac { font-size: 0.7rem; color: $text-light; font-family: monospace; }
-
-.col-security { max-width: 300px; } // Limite la largeur max sur desktop
-.msg-danger { color: $color-danger; font-weight: 500; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;}
-.msg-safe { color: $color-success; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;}
-.icon-muted { color: #cbd5e1; font-size: 0.8rem; }
-
-// --- ROW BLACKLIST ---
-.blacklisted-row {
-  background-color: #f1f5f9 !important; opacity: 0.8;
-  .machine-name, .net-ip, .msg-safe, .msg-danger { color: $text-light !important; text-decoration: line-through; }
-  .status-icon { opacity: 0.5; animation: none; }
-  .btn-action { opacity: 1; text-decoration: none; }
-}
-
-@keyframes indeterminate { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }
-@keyframes pulse-icon { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
-
-
-/* =========================================
-   📱 ADAPTATION TABLETTE (Max 1024px)
-   ========================================= */
+// ADAPTATION TABLETTE (Max 1024px)
 @media (max-width: 1024px) {
-  .devices-table-container {
-    margin-top: 1rem; // On remonte un peu le tableau
-  }
-
-  .header-actions {
-    padding: 1rem; // Header plus compact
-    h2 { font-size: 1rem; }
-    
-    // Sur petite tablette, on cache le texte "Actualiser"
-    .btn-text { display: none; } 
-  }
-
   .data-table {
-    // On réduit drastiquement le padding des cellules
-    th, td {
-      padding: 0.75rem 0.5rem; 
-      font-size: 0.85rem; // Police un peu plus petite
-    }
+    th, td { padding: 1rem 0.75rem; }
   }
-
-  // --- Optimisation des colonnes pour gagner de la place ---
-  
-  // 1. Machine : On cache le "Vendor" (Dell, HP) pour gagner de la place
-  .vendor-info { display: none; }
-  
-  // 2. Réseau : On aligne IP et MAC verticalement proprement
-  .net-ip { font-size: 0.8rem; }
-  .net-mac { font-size: 0.65rem; }
-
-  // 3. Sécurité : On réduit la largeur max autorisée pour forcer le retour à la ligne
-  .col-security { 
-    max-width: 180px; 
-    line-height: 1.3;
-  }
-
-  // 4. Actions : On cache le texte "Bloquer/Débloquer", on garde l'icône
-  .btn-action {
-    span { display: none; } // Cache le texte
-    padding: 0.4rem 0.6rem; // Bouton carré
-    font-size: 0.9rem; // Icône plus grosse
-  }
+  .btn-action span, .btn-details span { display: none; }
+  .detail-content-container .info-grid { grid-template-columns: 1fr 1fr; }
 }

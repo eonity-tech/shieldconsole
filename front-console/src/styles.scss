@@ -1,6 +1,38 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles */
+@use "sass:color";
 @import "@fortawesome/fontawesome-free/css/all.css";
 
+// --- VARIABLES DE POLICES ---
+:root {
+  // Police d'interface (SaaS moderne)
+  --font-main: 'Inter', 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Ubuntu Mono', 'Courier New', monospace;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: var(--font-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8fafc; // Un fond très légèrement gris pour faire ressortir les cartes blanches
+  color: #0f172a;
+}
+
+// --- CLASSES TECHNIQUES ---
+.tech-data {
+  font-family: var(--font-mono) !important;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.5px;
+}
+
+// Force l'héritage sur les composants de formulaire
+input, button, select, textarea {
+  font-family: inherit;
+}
+
+// --- ANIMATIONS ---
 // Styles for the loading spinner
 @keyframes pulse-icon {
   0% { transform: scale(1); opacity: 1; }

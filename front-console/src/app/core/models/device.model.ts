@@ -1,26 +1,17 @@
 export interface Device {
-  id: string; // UUID généré par le backend pour chaque appareil
+  id: string;
   macAddress: string;
   ipAddress: string;
   hostname: string;
-  
-  // On mappe les Strings Java directement
-  status: 'PROTECTED' | 'COMPROMISED' | 'UNKNOWN'; 
-  type: string; // PC, Serveur, Mobile...
-  osType: string;  // WINDOWS, LINUX, MACOS...
+  type: string;
+  osType: 'WINDOWS' | 'LINUX' | 'MACOS' | string;
   osVersion: string;
-  vendor: string;  // Dell, HP...
-  
+  vendor: string;
+  status: 'PROTECTED' | 'COMPROMISED' | 'UNPROTECTED' | 'UNKNOWN';
   isBlacklisted: boolean;
   securityRecommendation: string;
-  
-  // Champs calculés pour l'affichage
-  detectedSoftwares?: string[]; 
-}
-
-// Interface pour les statistiques globales du dashboard
-export interface DashboardSummary {
-  activeCount: number;
-  compromisedCount: number;
-  blacklistedCount: number;
+  vulnerabilityLevel: 'SAFE' | 'WARNING' | 'CRITICAL' | string;
+  riskScore: number;
+  openPorts: string;
+  enrolledAt: string;
 }

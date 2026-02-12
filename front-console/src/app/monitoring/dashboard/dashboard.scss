@@ -1,32 +1,31 @@
-// --- VARIABLES (Pour rester cohérent avec le reste) ---
-$bg-color: #f8fafc;        // Fond global
-$text-main: #0f172a;       // Titre foncé
-$primary: #2563eb;         // Bleu CyberShield
-$border-color: #e2e8f0;    // Gris très clair
+@use "sass:color";
+// --- VARIABLES ---
+$bg-color: #f8fafc;        
+$text-main: #0f172a;       
+$text-muted: #64748b;
+$primary: #2563eb;         
+$border-color: #e2e8f0;    
 
 // --- LAYOUT PRINCIPAL ---
 .dashboard-wrapper {
   padding: 2rem;
-  max-width: 1400px;       // On centre le contenu sur les grands écrans
+  max-width: 1400px;       
   margin: 0 auto;
-  min-height: 100vh;       // Prend toute la hauteur
+  min-height: 100vh;       
   background-color: $bg-color;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-// --- TITRE (H1) ---
 h1 {
   font-size: 1.75rem;
   font-weight: 800;
   color: $text-main;
-  margin: 0 0 2rem 0;      // Marge en bas
+  margin: 0 0 2rem 0;      
   letter-spacing: -0.025em;
-  
   display: flex;
   align-items: center;
   gap: 12px;
 
-  // Petite barre bleue décorative à gauche du titre
   &::before {
     content: '';
     display: block;
@@ -37,38 +36,70 @@ h1 {
   }
 }
 
-// --- GRILLE DES STATS (Vide pour l'instant, mais prête) ---
-.stats-grid {
-  display: grid;
-  // Responsive : colonnes automatiques min 240px
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+// --- SECTIONS ---
+.dashboard-section {
+  margin-bottom: 3rem;
   
-  // Si la grille est vide, on retire la margin pour éviter un vide inutile
-  &:empty {
-    margin-bottom: 0;
-    display: none; 
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    i { color: $primary; }
   }
 }
 
-// --- SÉPARATEUR (HR) ---
-// Note : Ton style inline dans le HTML prendra le dessus, 
-// mais ceci est la version "propre" si tu décides d'enlever le style inline.
 hr {
   border: 0;
   border-top: 1px solid $border-color;
   margin: 3rem 0;
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
-// --- RESPONSIVE ---
-@media (max-width: 768px) {
-  .dashboard-wrapper {
-    padding: 1rem;
+// --- CARTES DE CHARTS ---
+::ng-deep {
+  .chart-card {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+
+    .canvas-wrapper {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      flex-grow: 1;
+      min-height: 250px;
+    }
+
+    // Repositionnement précis du texte au milieu du Donut
+    .chart-center-text {
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+    }
   }
+}
+
+// --- LOADER ---
+.dashboard-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem;
+  color: $text-muted;
+  gap: 1rem;
   
-  h1 {
-    font-size: 1.5rem;
-  }
+  i { font-size: 2rem; color: $primary; }
+}
+
+@media (max-width: 768px) {
+  .dashboard-wrapper { padding: 1rem; }
+  h1 { font-size: 1.5rem; }
 }

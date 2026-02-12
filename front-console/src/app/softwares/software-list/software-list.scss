@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // --- VARIABLES ---
 $bg-white: #ffffff;
 $bg-gray-light: #f8fafc;
@@ -46,8 +48,6 @@ $success: #10b981;
   tr:last-child td { border-bottom: none; }
 }
 
-// --- CONTENU SPECIFIQUE ---
-
 // 1. Colonne Risque
 .col-status { width: 140px; }
 .badge {
@@ -89,8 +89,8 @@ $success: #10b981;
 
 // --- LIGNE CRITIQUE (Highlight) ---
 .row-critical {
-  background-color: #fff1f2 !important; // Rouge très très pâle
-  .soft-name { color: #991b1b; } // Rouge foncé pour le nom
+  background-color: #fff1f2 !important;
+  .soft-name { color: #991b1b; }
 }
 
 // --- ANIMATIONS ---
@@ -100,6 +100,6 @@ $success: #10b981;
 
 // Responsive Tablette
 @media (max-width: 1024px) {
-  .device-ref { display: none; } // On cache l'ID device
+  .device-ref { display: none; }
   .col-reco { max-width: 200px; }
 }

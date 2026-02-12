@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SubscriptionCheckResponse, SubscriptionStatusRequest } from '../models/subscription.model';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
@@ -9,20 +10,27 @@ import { SubscriptionCheckResponse, SubscriptionStatusRequest } from '../models/
 })
 export class SubscriptionService {
   private http = inject(HttpClient);
-  
-  private apiUrl = '/api/v1/subscription';
 
-  // Méthode pour vérifier le statut de l'abonnement
-  getSubscriptionStatus(tenantId: string): Observable<SubscriptionCheckResponse> {
+  private apiUrl = environment.apiUrl + '/subscription';
+
+  /// VÉRIFICATION DE BASE (Gratuit)
+  checkQuotaOnly(tenantId: string): Observable<void> {
+    return this.http.get<void>(`${this.apiUrl}/check-only/${tenantId}`);
+  }
+
+  /// VÉRIFICATION AVEC CONSOMMATION (Payant)
+  consumeQuota(tenantId: string): Observable<SubscriptionCheckResponse> {
     return this.http.post<SubscriptionCheckResponse>(`${this.apiUrl}/check-access/${tenantId}`, {});
   }
 
-  // Méthode pour activer/désactiver l'abonnement
+  // Récupérer le statut complet de l'abonnement (Admin)
+  getFullStatus(tenantId: string): Observable<SubscriptionCheckResponse> {
+    return this.http.get<SubscriptionCheckResponse>(`${this.apiUrl}/check-only/${tenantId}`);
+  }
+
+  // Mettre à jour le statut de l'abonnement (Admin)
   updateStatus(tenantId: string, active: boolean, reason: string): Observable<void> {
-    const payload: SubscriptionStatusRequest = {
-      active: active,
-      reason: reason
-    };
+    const payload: SubscriptionStatusRequest = { active, reason };
     return this.http.patch<void>(`${this.apiUrl}/${tenantId}/status`, payload);
   }
 }

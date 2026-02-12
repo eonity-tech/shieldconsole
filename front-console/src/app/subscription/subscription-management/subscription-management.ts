@@ -33,38 +33,46 @@ export class SubscriptionManagementComponent implements OnInit {
     this.loading.set(true);
     this.showCostInfo.set(false);
 
-    this.subService.getSubscriptionStatus(this.currentTenantId()).subscribe({
+    // Appel au service pour récupérer le statut complet de l'abonnement
+    this.subService.getFullStatus(this.currentTenantId()).subscribe({
 
-      // CAS 1 : Tout va bien (200 OK)
-      next: (data) => {
+      // Réponse dans 'next' pour les cas 200 et 403
+      next: (data: any) => {
         this.updateView(data);
       },
 
-      // CAS 2 : Erreur HTTP (403, 500, etc.)
-      error: (err) => {
-        // On intercepte la 403 pour lire les données
+      // Erreur dans 'error' pour les cas 403 et autres
+      error: (err: any) => {
         if (err.status === 403 && err.error && err.error.planType) {
-          // console.warn('Accès refusé mais données récupérées (403)');
           this.updateView(err.error);
         } else {
-          // console.error('Erreur fatale:', err);
           this.loading.set(false);
         }
       }
     });
   }
 
-  // Logique de mise à jour de l'affichage à partir des données reçues
   private updateView(data: any) {
-    const max = this.LIMITS[data.planType] || 100;
-    const used = Math.max(0, max - data.remainingCredits);
+    // console.log('Données reçues:', data);
+    if (!data) {
+      console.error("Aucune donnée reçue du serveur");
+      this.loading.set(false);
+      return;
+    }
+
+    // Calcul des limites et pourcentages d'utilisation
+    const planType = data.planType || 'FREE';
+    const remaining = data.remainingCredits ?? 0;
+    const max = this.LIMITS[planType] || 100;
+    const used = Math.max(0, max - remaining);
     const percent = Math.round((used / max) * 100);
 
     this.subscription.set({
       ...data,
+      planType: planType,
       maxLimit: max,
       usagePercent: percent,
-      active: (data.active !== undefined) ? data.active : data.authorized,
+      active: data.active ?? data.authorized ?? false,
       reason: data.reason || data.message || ''
     });
 
@@ -86,7 +94,7 @@ export class SubscriptionManagementComponent implements OnInit {
     this.showCostInfo.update(v => !v);
   }
 
-  // Logique privée de mise à jour
+  // Méthode commune pour activer/suspendre avec mise à jour optimiste de l'UI
   private updateSubscriptionStatus(isActive: boolean, reason: string) {
     if (!this.subscription()) return;
 

@@ -1,0 +1,102 @@
+@use "sass:color";
+
+$font-mono: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', monospace;
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.chart-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  h3 {
+    margin: 0 0 1.5rem 0;
+    font-size: 0.95rem;
+    color: #64748b;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    i { 
+      color: #94a3b8; 
+      font-size: 1.1em;
+    }
+  }
+}
+
+// --- LOGIQUE DE SCROLL ---
+.chart-scroll-container {
+    height: 30vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 8px;
+
+    // Scrollbar élégante
+    &::-webkit-scrollbar { width: 6px; }
+    &::-webkit-scrollbar-track { background: #f1f5f9; }
+    &::-webkit-scrollbar-thumb { 
+        background: #cbd5e1; 
+        border-radius: 10px;
+        &:hover { background: #94a3b8; }
+    }
+}
+
+.chart-inner-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.canvas-wrapper {
+    position: relative;
+    height: 30vh;
+    width: 100%;
+}
+
+.chart-center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none; 
+
+    .big-number {
+      display: block;
+      font-family: $font-mono; 
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1;
+      letter-spacing: -2px;
+  }
+  .label {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .charts-grid { grid-template-columns: 1fr; }
+}

@@ -5,6 +5,9 @@ import { KeycloakService } from 'keycloak-angular';
 
 import { routes } from './app.routes';
 import { apiInterceptor } from './core/interceptors/api.interceptor';
+import { cacheInterceptor } from './core/interceptors/cache.interceptor';
+
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 // Fonction d'initialisation de Keycloak pour configurer l'authentification avant le démarrage de l'application
 function initializeKeycloak(keycloak: KeycloakService) {
@@ -27,12 +30,13 @@ function initializeKeycloak(keycloak: KeycloakService) {
 // Configuration de l'application avec les providers nécessaires pour le routage, les requêtes HTTP et l'authentification Keycloak
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideCharts(withDefaultRegisterables()),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
       routes
     ),
     provideHttpClient(
-      withInterceptors([apiInterceptor])
+      withInterceptors([apiInterceptor, cacheInterceptor])
     ),
     KeycloakService,
     {

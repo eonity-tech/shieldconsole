@@ -1,0 +1,290 @@
+[
+  {
+    "deviceId": "net-01",
+    "ipAddress": "192.168.1.50",
+    "hostname": "PC-COMPTA-01",
+    "detectedSoftwares": ["Sage 100", "Outlook"],
+    "currentUsage": 4500000.0,
+    "statusCode": 3,
+    "message": "Trafic réseau nominal. Système sain."
+  },
+  {
+    "deviceId": "net-02",
+    "ipAddress": "10.0.0.5",
+    "hostname": "SRV-AD-PRIMARY",
+    "detectedSoftwares": ["Active Directory"],
+    "currentUsage": 125000000.0,
+    "statusCode": 3,
+    "message": "Trafic réseau nominal. Système sain."
+  },
+  {
+    "deviceId": "net-03",
+    "ipAddress": "192.168.1.200",
+    "hostname": "GUEST-WIFI-USER",
+    "detectedSoftwares": [],
+    "currentUsage": 890000000.0,
+    "statusCode": 1,
+    "message": "Trafic P2P détecté (BitTorrent). Saturation de la bande passante."
+  },
+  {
+    "deviceId": "net-04",
+    "ipAddress": "192.168.1.55",
+    "hostname": "PC-DEV-ALEX",
+    "detectedSoftwares": ["VS Code", "Docker"],
+    "currentUsage": 56000000.0,
+    "statusCode": 3,
+    "message": "Trafic réseau nominal. Système sain."
+  },
+  {
+    "deviceId": "net-05",
+    "ipAddress": "10.0.0.80",
+    "hostname": "SRV-WEB-NGINX",
+    "detectedSoftwares": ["Nginx"],
+    "currentUsage": 450000000.0,
+    "statusCode": 3,
+    "message": "Trafic HTTP/HTTPS standard."
+  },
+  {
+    "deviceId": "net-06",
+    "ipAddress": "192.168.1.99",
+    "hostname": "UNKNOWN-DEVICE",
+    "detectedSoftwares": [],
+    "currentUsage": 1024.0,
+    "statusCode": 1,
+    "message": "Scan de ports (Nmap) détecté vers 10.0.0.5."
+  },
+  {
+    "deviceId": "net-07",
+    "ipAddress": "192.168.1.12",
+    "hostname": "PRINTER-HP-LASER",
+    "detectedSoftwares": [],
+    "currentUsage": 250000.0,
+    "statusCode": 3,
+    "message": "En veille."
+  },
+  {
+    "deviceId": "net-08",
+    "ipAddress": "192.168.1.150",
+    "hostname": "TABLET-LOGISTIQUE",
+    "detectedSoftwares": ["Android OS"],
+    "currentUsage": 1200000.0,
+    "statusCode": 3,
+    "message": "Connexion stable."
+  },
+  {
+    "deviceId": "net-09",
+    "ipAddress": "10.0.0.25",
+    "hostname": "SRV-DB-PROD",
+    "detectedSoftwares": ["PostgreSQL"],
+    "currentUsage": 32000000.0,
+    "statusCode": 3,
+    "message": "Requêtes SQL optimisées."
+  },
+  {
+    "deviceId": "net-10",
+    "ipAddress": "192.168.50.10",
+    "hostname": "CAM-SECURITY-01",
+    "detectedSoftwares": [],
+    "currentUsage": 550000000.0,
+    "statusCode": 3,
+    "message": "Flux RTSP continu (H.264)."
+  },
+  {
+    "deviceId": "net-11",
+    "ipAddress": "192.168.50.11",
+    "hostname": "CAM-SECURITY-02",
+    "detectedSoftwares": [],
+    "currentUsage": 0.0,
+    "statusCode": 1,
+    "message": "Perte de signal vidéo. Flux interrompu."
+  },
+  {
+    "deviceId": "net-12",
+    "ipAddress": "192.168.1.101",
+    "hostname": "PC-RH-JULIE",
+    "detectedSoftwares": ["Word", "Excel"],
+    "currentUsage": 5000000.0,
+    "statusCode": 3,
+    "message": "Trafic réseau nominal. Système sain."
+  },
+  {
+    "deviceId": "net-13",
+    "ipAddress": "192.168.1.102",
+    "hostname": "PC-RH-MARC",
+    "detectedSoftwares": ["Teams"],
+    "currentUsage": 85000000.0,
+    "statusCode": 3,
+    "message": "Appel vidéo en cours."
+  },
+  {
+    "deviceId": "net-14",
+    "ipAddress": "10.0.0.254",
+    "hostname": "GW-FIREWALL",
+    "detectedSoftwares": ["Pfsense"],
+    "currentUsage": 1500000000.0,
+    "statusCode": 3,
+    "message": "Charge CPU normale."
+  },
+  {
+    "deviceId": "net-15",
+    "ipAddress": "192.168.1.77",
+    "hostname": "MACBOOK-DESIGN",
+    "detectedSoftwares": ["Adobe CC"],
+    "currentUsage": 300000000.0,
+    "statusCode": 3,
+    "message": "Upload vers Cloud en cours."
+  },
+  {
+    "deviceId": "net-16",
+    "ipAddress": "192.168.1.201",
+    "hostname": "RPI-HOME-ASSIST",
+    "detectedSoftwares": ["Home Assistant"],
+    "currentUsage": 45000.0,
+    "statusCode": 3,
+    "message": "MQTT Keep-alive."
+  },
+  {
+    "deviceId": "net-17",
+    "ipAddress": "192.168.1.18",
+    "hostname": "PC-STAGIAIRE",
+    "detectedSoftwares": ["Tor Browser"],
+    "currentUsage": 15000000.0,
+    "statusCode": 1,
+    "message": "Connexion au réseau Tor détectée (Nœud de sortie)."
+  },
+  {
+    "deviceId": "net-18",
+    "ipAddress": "10.0.0.12",
+    "hostname": "SRV-BACKUP",
+    "detectedSoftwares": ["Veeam"],
+    "currentUsage": 12000.0,
+    "statusCode": 3,
+    "message": "Attente de la fenêtre de sauvegarde."
+  },
+  {
+    "deviceId": "net-19",
+    "ipAddress": "192.168.1.60",
+    "hostname": "SMART-TV-SALLE-REUNION",
+    "detectedSoftwares": ["Netflix"],
+    "currentUsage": 450000000.0,
+    "statusCode": 3,
+    "message": "Streaming 4K actif."
+  },
+  {
+    "deviceId": "net-20",
+    "ipAddress": "192.168.1.30",
+    "hostname": "IOT-THERMOSTAT",
+    "detectedSoftwares": [],
+    "currentUsage": 500.0,
+    "statusCode": 3,
+    "message": "Heartbeat OK."
+  },
+  {
+    "deviceId": "net-21",
+    "ipAddress": "192.168.1.31",
+    "hostname": "IOT-FRIGO",
+    "detectedSoftwares": [],
+    "currentUsage": 5000000.0,
+    "statusCode": 1,
+    "message": "Trafic sortant suspect vers IP chinoise connue."
+  },
+  {
+    "deviceId": "net-22",
+    "ipAddress": "192.168.1.222",
+    "hostname": "PC-CEO",
+    "detectedSoftwares": ["Outlook", "Zoom"],
+    "currentUsage": 12000000.0,
+    "statusCode": 3,
+    "message": "Trafic réseau nominal. Système sain."
+  },
+  {
+    "deviceId": "net-23",
+    "ipAddress": "10.0.0.99",
+    "hostname": "SRV-MAIL-EXCHANGE",
+    "detectedSoftwares": ["Exchange 2019"],
+    "currentUsage": 65000000.0,
+    "statusCode": 3,
+    "message": "File d'attente SMTP normale."
+  },
+  {
+    "deviceId": "net-24",
+    "ipAddress": "192.168.1.88",
+    "hostname": "WIFI-AP-LOBBY",
+    "detectedSoftwares": ["Ubiquiti Firmware"],
+    "currentUsage": 230000000.0,
+    "statusCode": 3,
+    "message": "25 clients connectés."
+  },
+  {
+    "deviceId": "net-25",
+    "ipAddress": "192.168.1.44",
+    "hostname": "PC-MARKETING-02",
+    "detectedSoftwares": ["Chrome"],
+    "currentUsage": 8000000.0,
+    "statusCode": 3,
+    "message": "Navigation Web standard."
+  },
+  {
+    "deviceId": "net-26",
+    "ipAddress": "192.168.1.199",
+    "hostname": "UNKNOWN-LAPTOP",
+    "detectedSoftwares": [],
+    "currentUsage": 50000000.0,
+    "statusCode": 1,
+    "message": "Tentative d'accès SSH (Bruteforce) sur 10.0.0.5."
+  },
+  {
+    "deviceId": "net-27",
+    "ipAddress": "10.0.0.200",
+    "hostname": "NAS-SYNOLOGY",
+    "detectedSoftwares": ["DSM 7"],
+    "currentUsage": 500000.0,
+    "statusCode": 3,
+    "message": "Rien à signaler."
+  },
+  {
+    "deviceId": "net-28",
+    "ipAddress": "192.168.1.5",
+    "hostname": "PHONE-VOIP-ACCEUIL",
+    "detectedSoftwares": [],
+    "currentUsage": 120000.0,
+    "statusCode": 3,
+    "message": "SIP Registered."
+  },
+  {
+    "deviceId": "net-29",
+    "ipAddress": "192.168.1.16",
+    "hostname": "PC-TEST-VIRUS",
+    "detectedSoftwares": [],
+    "currentUsage": 999999999.0,
+    "statusCode": 1,
+    "message": "Communication C&C (Command & Control) détectée."
+  },
+  {
+    "deviceId": "net-30",
+    "ipAddress": "10.0.0.3",
+    "hostname": "SRV-DNS-SEC",
+    "detectedSoftwares": ["Bind9"],
+    "currentUsage": 4500000.0,
+    "statusCode": 3,
+    "message": "Requêtes DNS valides."
+  },
+  {
+    "deviceId": "net-31",
+    "ipAddress": "192.168.1.253",
+    "hostname": "SWITCH-CORE",
+    "detectedSoftwares": ["Cisco IOS"],
+    "currentUsage": 0.0,
+    "statusCode": 3,
+    "message": "Management interface OK."
+  },
+  {
+    "deviceId": "net-32",
+    "ipAddress": "192.168.1.254",
+    "hostname": "ROUTER-EDGE",
+    "detectedSoftwares": ["Mikrotik"],
+    "currentUsage": 800000000.0,
+    "statusCode": 3,
+    "message": "Uplink stable."
+  }
+]

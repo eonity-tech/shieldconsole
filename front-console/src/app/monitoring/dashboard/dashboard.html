@@ -1,5 +1,29 @@
 <div class="dashboard-wrapper">
-  <h1>Tableau de bord</h1>
-  <div class="stats-grid"></div>
-  <hr> <app-device-list></app-device-list>
+  <div class="dashboard-header">
+    <h1><i class="fas fa-chart-line"></i> Tableau de bord</h1>
+    <p class="subtitle">Vue d'ensemble de la sécurité et du trafic en temps réel</p>
+  </div>
+
+  @if (!loading()) {
+    <section class="dashboard-section">
+      <div class="section-title">
+        <i class="fas fa-shield-halved"></i> État du Parc Informatique
+      </div>
+      <app-charts [dashboardData]="devices()"></app-charts>
+    </section>
+
+    <hr class="dashboard-separator">
+
+    <section class="dashboard-section">
+      <div class="section-title">
+        <i class="fas fa-network-wired"></i> Supervision Réseau
+      </div>
+      <app-network-charts [trafficData]="trafficList()"></app-network-charts>
+    </section>
+
+  } @else {
+    <div class="dashboard-loader">
+       <i class="fas fa-circle-notch fa-spin"></i> Initialisation des moniteurs...
+    </div>
+  }
 </div>

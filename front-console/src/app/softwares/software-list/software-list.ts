@@ -20,6 +20,7 @@ export class SoftwareListComponent implements OnInit {
     this.refresh();
   }
 
+  //Pour rafraîchir la liste des logiciels
   refresh() {
     this.loading.set(true);
     this.softwareService.getSoftwareList().subscribe({

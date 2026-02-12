@@ -1,24 +1,26 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { Device } from '../models/device.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class DeviceService {
   private http = inject(HttpClient);
+  private apiUrl = environment.apiUrl;
 
-  // On pointe vers l'API. Même si l'URL s'appelle encore "monitoring" coté back,
-  // pour le front, c'est un service de Devices.
-  private apiUrl = '/api/v1/network-monitoring';
-
+  // Pour lister tous les appareils de l'utilisateur
   getAllDevices(): Observable<Device[]> {
-    return this.http.get<Device[]>(`${this.apiUrl}/dashboard`);
+    return this.http.get<Device[]>(`${this.apiUrl}/devices`);
   }
 
-  // Exemple de future méthode qui aura sa place ici
-  blockDevice(deviceId: string): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/block/${deviceId}`, {});
+  // Pour bloquer un appareil
+  blockDevice(id: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/devices/security/${id}/block`, {});
+  }
+
+  // Pour débloquer un appareil
+  unblockDevice(id: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/devices/security/${id}/unblock`, {});
   }
 }

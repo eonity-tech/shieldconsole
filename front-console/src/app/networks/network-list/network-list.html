@@ -5,7 +5,8 @@
         </h2>
         <button (click)="refresh()" class="btn-refresh">
             <i class="fas fa-rotate" [class.fa-spin]="loading()"></i> Actualiser </button>
-    </div> @if (loading()) { <div class="loading-bar">
+    </div>
+    <app-network-charts [trafficData]="trafficList()"></app-network-charts> @if (loading()) { <div class="loading-bar">
         <div class="bar-fill"></div>
     </div> } <div class="table-scroll-wrapper">
         <table class="data-table">
@@ -17,7 +18,8 @@
                     <th>Diagnostic & Ports</th>
                 </tr>
             </thead>
-            <tbody> @for (item of trafficList(); track item.deviceId) { <tr [class.row-danger]="item.statusCode === 1">
+            <tbody> @for (item of paginatedTraffic(); track item.deviceId) { <tr
+                    [class.row-danger]="item.statusCode === 1">
                     <td class="col-status">
                         <div class="status-indicator" [class.green]="item.statusCode === 3"
                             [class.red]="item.statusCode === 1"> @if (item.statusCode === 3) { <i
@@ -43,5 +45,19 @@
                         </div> } </td>
                 </tr> } </tbody>
         </table>
+    </div>
+    <div class="pagination-footer">
+        <span class="page-info"> Affichage de {{ paginatedTraffic().length }} sur {{ trafficList().length }} entrées
+        </span>
+        <div class="pagination-controls">
+            <button class="page-btn" [disabled]="currentPage() === 1" (click)="changePage(currentPage() - 1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <span class="page-current">Page {{ currentPage() }} / {{ totalPages() }}</span>
+            <button class="page-btn" [disabled]="currentPage() === totalPages()"
+                (click)="changePage(currentPage() + 1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
     </div>
 </div>

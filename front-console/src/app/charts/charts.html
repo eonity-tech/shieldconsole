@@ -1,0 +1,31 @@
+@if (dashboardData().length) { <div class="charts-grid">
+    <div class="chart-card">
+        <h3><i class="fas fa-heartbeat"></i> Santé de Sécurité</h3>
+        <div class="canvas-wrapper">
+            <canvas baseChart [data]="healthChartData()" [options]="healthChartOptions" [type]="'doughnut'">
+            </canvas>
+        </div>
+        <div class="chart-center-text">
+            <span class="big-number">{{ dashboardData().length }}</span>
+            <span class="label">Appareils</span>
+        </div>
+    </div>
+    <div class="chart-card wide">
+        <div class="card-header-flex">
+            <h3><i class="fas fa-triangle-exclamation"></i> Risques ({{ dashboardData().length }})</h3>
+        </div>
+        <div class="chart-scroll-container">
+            <div class="chart-inner-wrapper" [style.height.px]="trafficChartHeight()">
+                <canvas baseChart [data]="trafficChartData()" [options]="trafficChartOptions" [type]="'bar'">
+                </canvas>
+            </div>
+        </div>
+    </div>
+    <div class="chart-card">
+        <h3><i class="fab fa-linux"></i> Parc par OS</h3>
+        <div class="canvas-wrapper">
+            <canvas baseChart [data]="vulnChartData()" [type]="'pie'" [options]="vulnChartOptions">
+            </canvas>
+        </div>
+    </div>
+</div> }
